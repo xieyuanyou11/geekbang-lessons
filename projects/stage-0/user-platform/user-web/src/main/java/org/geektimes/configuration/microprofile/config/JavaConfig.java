@@ -2,11 +2,18 @@ package org.geektimes.configuration.microprofile.config;
 
 
 import org.eclipse.microprofile.config.Config;
+import org.eclipse.microprofile.config.ConfigProvider;
 import org.eclipse.microprofile.config.ConfigValue;
 import org.eclipse.microprofile.config.spi.ConfigSource;
 import org.eclipse.microprofile.config.spi.Converter;
+import org.geektimes.configuration.microprofile.converter.ConverterUtils;
 
-import java.util.*;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.LinkedList;
+import java.util.List;
+import java.util.Optional;
+import java.util.ServiceLoader;
 
 public class JavaConfig implements Config {
 
@@ -30,11 +37,10 @@ public class JavaConfig implements Config {
         configSources.sort(configSourceComparator);
     }
 
-    @Override
-    public <T> T getValue(String propertyName, Class<T> propertyType) {
-        String propertyValue = getPropertyValue(propertyName);
-        // String 转换成目标类型
-        return null;
+    public static void main(String[] args) {
+        Config config = ConfigProvider.getConfig();
+        String value = config.getValue("application.name", String.class);
+        System.out.println(value);
     }
 
     @Override
@@ -77,5 +83,12 @@ public class JavaConfig implements Config {
     @Override
     public <T> T unwrap(Class<T> type) {
         return null;
+    }
+
+    @Override
+    public <T> T getValue(String propertyName, Class<T> propertyType) {
+        String propertyValue = getPropertyValue(propertyName);
+        // String 转换成目标类型
+        return ConverterUtils.convert(propertyValue, propertyType);
     }
 }

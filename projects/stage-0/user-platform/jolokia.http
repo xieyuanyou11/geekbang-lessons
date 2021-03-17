@@ -1,0 +1,17 @@
+### 访问测试
+http://localhost:8080/user-web/jolokia
+
+### read方法
+http://localhost:8080/user-web/jolokia/read/org.geektimes.projects.user.management:type=User
+
+#### 属性read
+http://localhost:8080/user-web/jolokia/read/org.geektimes.projects.user.management:type=User/PhoneNumber
+
+### write方法
+http://localhost:8080/user-web/jolokia/write/org.geektimes.projects.user.management:type=User/PhoneNumber/123456
+
+### exec方法
+http://localhost:8080/user-web/jolokia/exec/org.geektimes.projects.user.management:type=User/toString
+
+### 列表list
+http://localhost:8080/user-web/jolokia/list
